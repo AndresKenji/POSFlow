@@ -32,10 +32,10 @@ for different roles.
 ## 🚀 Quick Start
 ```bash
 # Clone the repository
-git clone https://github.com/andreskenji/posflow.git
+git clone https://github.com/AndresKenji/POSFlow.git
 
 # Install dependencies
-cd posflow
+cd POSFlow
 npm install
 pip install -r requirements.txt
 
