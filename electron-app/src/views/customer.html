@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POSFlow - Customer</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/customer.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🛒 Place Your Order</h1>
+    </header>
+
+    <main>
+      <section class="menu">
+        <h2>Menu</h2>
+        <div id="menuItems" class="menu-grid">
+          <p>Loading menu...</p>
+        </div>
+      </section>
+
+      <section class="cart">
+        <h2>Your Order</h2>
+        <div id="cartItems">
+          <p>Cart is empty</p>
+        </div>
+        <div class="cart-total">
+          <strong>Total: $<span id="cartTotal">0.00</span></strong>
+        </div>
+        <button id="placeOrder" class="btn-primary">Place Order</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/api-client.js"></script>
+  <script src="../js/customer.js"></script>
+</body>
+</html>
