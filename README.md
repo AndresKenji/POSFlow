@@ -32,7 +32,7 @@ for different roles.
 ## 🚀 Quick Start
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/posflow.git
+git clone https://github.com/andreskenji/posflow.git
 
 # Install dependencies
 cd posflow
