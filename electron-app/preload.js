@@ -8,10 +8,10 @@ contextBridge.exposeInMainWorld('electron', {
   openCustomerView: () => ipcRenderer.send('open-customer-view'),
 
   // API info
-  apiUrl: 'http://localhost:8000/api'
+  apiUrl: 'http://localhost:8080/api'
 });
 
 // Expose API for frontend to use
 contextBridge.exposeInMainWorld('api', {
-  baseUrl: 'http://localhost:8000/api'
+  baseUrl: 'http://localhost:8080/api'
 });

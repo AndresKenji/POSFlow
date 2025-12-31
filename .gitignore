@@ -1,10 +1,30 @@
+# ==================== Go ====================
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Backend binary
+backend/posflow-server
+backend/posflow-server.exe
+
+# ==================== Python ====================
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
-
-# C extensions
-*.so
 
 # Distribution / packaging
 .Python
@@ -207,7 +227,23 @@ marimo/_lsp/
 __marimo__/
 
 # Claude AI
-CLAUDE.md
+# CLAUDE.md  # Removed - now tracked in version control
 
 # GitHub Copilot
 copilot-instructions.md
+
+# ==================== Database ====================
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-shm
+*.db-wal
+
+# ==================== Logs ====================
+logs/
+*.log
+
+# ==================== OS ====================
+.DS_Store
+Thumbs.db

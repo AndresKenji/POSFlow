@@ -30,6 +30,6 @@ async function loadDashboardData() {
   } catch (error) {
     console.error('Failed to load dashboard data:', error);
     // Show error message to user
-    alert('Failed to connect to backend. Make sure the Python API is running.');
+    alert('Failed to connect to backend. Make sure the service is running.');
   }
 }

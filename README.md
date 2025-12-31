@@ -21,9 +21,9 @@ for different roles.
 ## 🛠️ Tech Stack
 
 - **Frontend**: Electron + HTML/CSS/JavaScript
-- **Backend**: Python + FastAPI
+- **Backend**: Go + Gin framework
 - **Database**: SQLite
-- **Architecture**: Offline-first, local-first
+- **Architecture**: Offline-first, local-first, single executable
 
 ## 📸 Screenshots
 
@@ -39,15 +39,40 @@ cd POSFlow
 npm install
 pip install -r requirements.txt
 
-# Run the application
+# Install frontend dependencies
+cd electron-app
+npm install
+
+# Build and run backend (in another terminal)
+cd ../backend
+go build -o posflow-server
+./posflow-server
+
+# Run the Electron app
+cd ../electron-app
 npm start
 ```
 
 ## 📋 Requirements
 
 - Node.js 16+
-- Python 3.9+
+- Go 1.21+
 - SQLite 3
+
+## 📦 Building for Production
+
+```bash
+# Build backend executable
+cd backend
+go build -ldflags="-s -w" -o posflow-server
+
+# Optional: Compress with UPX
+upx --best posflow-server
+
+# Build Electron app with electron-builder
+cd ../electron-app
+npm run build
+```
 
 ## 🤝 Contributing
 
