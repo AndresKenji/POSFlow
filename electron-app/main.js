@@ -9,8 +9,9 @@ let customerWindow;
 let backendProcess;
 
 // Backend server configuration
-const BACKEND_PORT = 8080;
+const BACKEND_PORT = 8000;
 const BACKEND_STARTUP_DELAY = 2000; // 2 seconds
+const isDev = !app.isPackaged;
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -78,8 +79,9 @@ function createCustomerWindow() {
  */
 function startBackend() {
   // Skip starting backend in development (assume it's running separately)
-  if (process.env.NODE_ENV === 'development') {
+  if (isDev) {
     console.log('Development mode: Assuming backend is running on port', BACKEND_PORT);
+    console.log('Start the backend manually with: cd backend && go run cmd/api/main.go');
     return;
   }
 
