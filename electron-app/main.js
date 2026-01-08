@@ -20,15 +20,17 @@ function createMainWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
-      contextIsolation: true
+      contextIsolation: true,
+      cache: false  // Disable cache for development
     }
   });
 
   mainWindow.loadFile('src/views/admin.html');
 
-  // Open DevTools in development
-  if (process.env.NODE_ENV === 'development') {
+  // Open DevTools in development and disable cache
+  if (process.env.NODE_ENV === 'development' || isDev) {
     mainWindow.webContents.openDevTools();
+    mainWindow.webContents.session.clearCache();
   }
 
   mainWindow.on('closed', () => {
@@ -138,7 +140,7 @@ function stopBackend() {
 async function waitForBackend(maxAttempts = 10) {
   for (let i = 0; i < maxAttempts; i++) {
     try {
-      const response = await fetch(`http://localhost:${BACKEND_PORT}/api/health`);
+      const response = await fetch(`http://localhost:${BACKEND_PORT}/health`);
       if (response.ok) {
         console.log('Backend is ready!');
         return true;

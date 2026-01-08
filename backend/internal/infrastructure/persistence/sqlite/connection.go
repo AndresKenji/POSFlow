@@ -50,6 +50,7 @@ func (d *Database) AutoMigrate() error {
 		&ProductModel{},
 		&OrderModel{},
 		&OrderItemModel{},
+		&SalesModel{},
 	)
 
 	if err != nil {

@@ -11,11 +11,14 @@ import (
 	orderQueries "POSFlowBackend/internal/application/order/querys"
 	productCommands "POSFlowBackend/internal/application/product/commands"
 	productQueries "POSFlowBackend/internal/application/product/queries"
+	salesCommands "POSFlowBackend/internal/application/sales/commands"
+	salesQueries "POSFlowBackend/internal/application/sales/queries"
 
 	// Domain layer
 	"POSFlowBackend/internal/domain/order"
 
 	// Infrastructure layer
+	"POSFlowBackend/internal/domain/sales"
 	"POSFlowBackend/internal/infrastructure/config"
 	"POSFlowBackend/internal/infrastructure/http"
 	"POSFlowBackend/internal/infrastructure/http/handlers"
@@ -43,10 +46,12 @@ func main() {
 	// Initialize repositories (Infrastructure layer)
 	productRepo := sqlite.NewProductRepository(database.DB)
 	orderRepo := sqlite.NewOrderRepository(database.DB)
+	salesRepo := sqlite.NewSalesRepository(database.DB)
 	log.Println("✅ Repositories initialized")
 
 	// Initialize domain services
 	orderService := order.NewOrderService(orderRepo, productRepo)
+	salesService := sales.NewSalesService(salesRepo, orderRepo)
 	log.Println("✅ Domain services initialized")
 
 	// Initialize application layer - Product commands
@@ -69,6 +74,12 @@ func main() {
 	getOrderQuery := orderQueries.NewGetOrderQuery(orderRepo, productRepo)
 	getPendingOrdersQuery := orderQueries.NewGetPendingOrdersQuery(orderRepo, productRepo)
 
+	// Initialize application layer - Sales commands
+	closeDayCmd := salesCommands.NewCloseDayCommand(salesService)
+
+	// Initialize application layer - Sales queries
+	getDailySalesQuery := salesQueries.NewGetDailySalesQuery(salesService)
+	getSalesReportQuery := salesQueries.NewGetSalesReportQuery(salesService)
 	log.Println("✅ Application layer initialized")
 
 	// Initialize HTTP handlers (Interfaces layer)
@@ -90,13 +101,19 @@ func main() {
 		getPendingOrdersQuery,
 	)
 
+	salesHandler := handlers.NewSalesHandler( // ← Agregar
+		getDailySalesQuery,
+		getSalesReportQuery,
+		closeDayCmd,
+	)
+
 	log.Println("✅ HTTP handlers initialized")
 
 	// Initialize HTTP server
 	server := http.NewServer(cfg.ServerPort)
 
 	// Register routes
-	routes.RegisterRoutes(server.Router(), productHandler, orderHandler)
+	routes.RegisterRoutes(server.Router(), productHandler, orderHandler, salesHandler)
 	log.Println("✅ Routes registered")
 
 	// Setup graceful shutdown

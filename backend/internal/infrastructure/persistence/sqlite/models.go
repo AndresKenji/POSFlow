@@ -52,3 +52,20 @@ type OrderItemModel struct {
 func (OrderItemModel) TableName() string {
 	return "order_items"
 }
+
+// SalesModel - Database representation of DailySales
+type SalesModel struct {
+	ID          string    `gorm:"primaryKey"`
+	Date        time.Time `gorm:"not null;uniqueIndex"`
+	TotalSales  float64   `gorm:"default:0"`
+	TotalOrders int       `gorm:"default:0"`
+	OrderIDs    string    `gorm:"type:text"` // JSON array of order IDs
+	Closed      bool      `gorm:"default:false"`
+	ClosedAt    *time.Time
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
+func (SalesModel) TableName() string {
+	return "daily_sales"
+}

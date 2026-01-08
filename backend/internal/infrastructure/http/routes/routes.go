@@ -11,6 +11,7 @@ func RegisterRoutes(
 	router *gin.Engine,
 	productHandler *handlers.ProductHandler,
 	orderHandler *handlers.OrderHandler,
+	salesHandler *handlers.SalesHandler,
 ) {
 	// Health check endpoint
 	router.GET("/health", healthCheck)
@@ -23,6 +24,9 @@ func RegisterRoutes(
 
 		// Order routes
 		registerOrderRoutes(v1, orderHandler)
+
+		// Sales routes
+		registerSalesRoutes(v1, salesHandler)
 	}
 }
 
@@ -68,5 +72,15 @@ func registerOrderRoutes(rg *gin.RouterGroup, handler *handlers.OrderHandler) {
 
 		// Order status management
 		orders.PATCH("/:id/status", handler.UpdateOrderStatus)
+	}
+}
+
+// registerSalesRoutes registers all sales-related routes
+func registerSalesRoutes(rg *gin.RouterGroup, handler *handlers.SalesHandler) {
+	sales := rg.Group("/sales")
+	{
+		sales.GET("/daily", handler.GetDailySales)
+		sales.GET("/report", handler.GetSalesReport)
+		sales.POST("/close-day", handler.CloseDay)
 	}
 }

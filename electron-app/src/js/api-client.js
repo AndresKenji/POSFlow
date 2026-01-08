@@ -5,7 +5,8 @@
 class APIClient {
   constructor() {
     // Get API URL from preload script or use default
-    this.baseURL = window.api?.baseUrl || 'http://localhost:8080/api';
+    this.baseURL = window.api?.baseUrl || 'http://localhost:8000/api/v1';
+    console.log('🔧 APIClient initialized with baseURL:', this.baseURL);
     this.timeout = 10000; // 10 seconds timeout
     this.retryAttempts = 3;
     this.retryDelay = 1000; // 1 second
@@ -20,6 +21,7 @@ class APIClient {
    */
   async request(endpoint, options = {}, attempt = 1) {
     const url = `${this.baseURL}${endpoint}`;
+    console.log('Making request to:', url);
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
@@ -104,7 +106,7 @@ class APIClient {
    */
   async healthCheck() {
     try {
-      const response = await this.request('/health');
+      const response = await fetch('http://localhost:8000/health');
       return response.success === true;
     } catch (error) {
       return false;
